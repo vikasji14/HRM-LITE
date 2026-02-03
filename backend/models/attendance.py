@@ -1,6 +1,6 @@
 
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 from typing import Optional
 from typing_extensions import Literal
 from datetime import datetime, date
@@ -11,7 +11,8 @@ class AttendanceBase(BaseModel):
     date: str = Field(..., description="Attendance date in YYYY-MM-DD format")
     status: Literal["Present", "Absent"] = Field(..., description="Attendance status")
 
-    @validator('date')
+    @field_validator('date')
+    @classmethod
     def validate_date(cls, v):
         try:
             datetime.strptime(v, '%Y-%m-%d')
@@ -27,7 +28,7 @@ class AttendanceResponse(AttendanceBase):
     created_at: Optional[datetime] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
         json_encoders = {
             ObjectId: str,
             datetime: lambda v: v.isoformat()

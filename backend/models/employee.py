@@ -34,7 +34,7 @@ class EmployeeResponse(EmployeeBase):
     created_at: Optional[datetime] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
         json_encoders = {
             ObjectId: str,
             datetime: lambda v: v.isoformat()
