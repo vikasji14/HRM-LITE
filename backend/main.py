@@ -15,6 +15,7 @@ async def lifespan(app: FastAPI):
     pass
 
 # Create FastAPI application instance
+# Note: For Vercel, lifespan is handled in api/index.py separately
 app = FastAPI(
     title="HRMS Lite API",
     description="Human Resource Management System API",
